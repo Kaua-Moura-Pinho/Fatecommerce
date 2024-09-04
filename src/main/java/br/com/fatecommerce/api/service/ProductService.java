@@ -41,7 +41,7 @@ public class ProductService {
     public Product findProductById(Long idProduct) {
         return productRepository.findById(idProduct)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Produto não encontrada!"));
+                        "Produto não encontrado!"));
     }
 
     public Product updateProduct(Product product) {
@@ -51,6 +51,22 @@ public class ProductService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Produto não encontrado!");
         }
+    }
+
+    public Optional<Product> findByEanProduct(String eanProduct){
+        return Optional.ofNullable(productRepository.findByEanProduct(eanProduct)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Nenhum produto encontrado com esse EAN!")));
+    }
+
+   /* public Product findBySkuProduct(String skuProduct) {
+        return productRepository.findBySkuProduct(skuProduct)
+                .orElse(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Produto não encontrado!"));
+    }*/
+
+    public List<Product> findBySkuProduct(String skuProduct) {
+        return productRepository.findBySkuProduct(skuProduct);
     }
 
 }
